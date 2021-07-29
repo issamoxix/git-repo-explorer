@@ -1,10 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Card from "./components/Card";
 
 function App() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [pag, setPag] = useState(false);
   const LoadingSkull = () => {
     let comps = [];
     for (let i = 0; i < 4; i++) {
@@ -31,19 +33,36 @@ function App() {
 
     return { dd, mm, yyyy };
   };
-
+  const observer = useRef();
+  const lastElementRef = useCallback(
+    (node) => {
+      if (pag) return;
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setPage(parseInt(page) + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, page, pag]
+  );
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
+        // setLoading(true);
+        setPag(true);
         let datex = getTodayDate();
         let res = await axios.get(
-          `https://api.github.com/search/repositories?q=created:>${datex["yyyy"]}-${datex["mm"]}-${datex["dd"]}&sort=stars&order=desc&page=1`
+          `https://api.github.com/search/repositories?q=created:>${datex["yyyy"]}-${datex["mm"]}-${datex["dd"]}&sort=stars&order=desc&page=${page}`
         );
         let data = res.data.items;
         // console.log(data);
         setLoading(false);
-        return setItems(data);
+        // return setItems((d) => [...d, ...data]);
+        setPag(false);
+        return setItems((d) => [...new Set([...d, ...data])]);
       } catch (error) {
         console.log(error);
       }
@@ -51,13 +70,25 @@ function App() {
     fetchData();
     // console.log(items[0].pushed_at.split("T")[0]);
     console.log();
-  }, []);
+  }, [page]);
   return (
     <div className="App">
       <div className="container">
         {!loading
           ? items.map((d, k) => <Card infos={d} key={k} />)
           : LoadingSkull()}
+        {!loading && (
+          <div className="Edge" ref={lastElementRef}>
+            <Card
+              loading={true}
+              infos={{
+                name: "CC",
+                description: "desc",
+                owner: { avatar_url: "loading" },
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
