@@ -7,6 +7,12 @@
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 }
+body {
+  overflow: hidden;
+}
+a {
+  text-decoration: none;
+}
 .App {
   width: 100vw;
   height: 100vh;

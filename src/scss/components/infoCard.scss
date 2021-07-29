@@ -1,0 +1,95 @@
+@import "../global/colors.scss";
+
+.peak {
+  right: -26%;
+}
+.imbrace {
+  right: 5%;
+  animation: show 0.8s linear;
+}
+.infoCard-container {
+  height: 400px;
+  width: 400px;
+  border-radius: 10px;
+  position: absolute;
+  top: 2%;
+  //   right: 5%;
+  background-color: $g-700;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  //   animation: show 0.8s linear;
+}
+.infoCard-banner,
+.infoCard-details {
+  height: 50%;
+  width: 100%;
+}
+.infoCard-details {
+  padding: 5px;
+  position: relative;
+  & p {
+    color: lightgray;
+    padding-left: 4px;
+    height: 58%;
+    overflow-y: scroll;
+  }
+}
+
+.infoCard-banner {
+  & img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+.footerButons {
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
+  & button {
+    font-size: 16px;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 7px;
+    color: #fff;
+    border: 1px solid $acc;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background 0.3s linear;
+    & a {
+      color: #fff;
+    }
+    &:hover {
+      background-color: $acc;
+    }
+  }
+}
+@keyframes show {
+  0% {
+    right: -100%;
+  }
+  100% {
+    right: 5%;
+  }
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
