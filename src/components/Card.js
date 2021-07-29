@@ -16,15 +16,15 @@ function Card({ infos, loading = false }) {
       onClick={() => setShow(!show)}
     >
       {active && (
+        <InfoCard data={infos} show={false} key={infos.id} active={setActive} />
+      )}
+      {show && (
         <InfoCard
           data={infos}
           show={show}
-          key={infos.name}
-          active={setActive}
+          key={parseInt(infos.id) + 1}
+          active={setShow}
         />
-      )}
-      {show && (
-        <InfoCard data={infos} show={show} key={infos.name} active={setShow} />
       )}
       <div
         className="card-avatar "
