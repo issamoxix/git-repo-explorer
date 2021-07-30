@@ -12,10 +12,9 @@ function Card({ infos, loading = false }) {
       className="card-container"
       onMouseEnter={() => setActive(!active)}
       onMouseLeave={() => setActive(!active)}
-      // onClick={() => setActive(!active)}
       onClick={() => setShow(!show)}
     >
-      {active && (
+      {active && !loading && (
         <InfoCard data={infos} show={false} key={infos.id} active={setActive} />
       )}
       {show && (

@@ -71,6 +71,7 @@
   background-size: 400% 400%;
   animation: pulse 1.2s ease-in infinite;
   border-radius: 10px;
+  margin: 2px;
 }
 @keyframes pulse {
   0% {
@@ -79,4 +80,7 @@
   100% {
     background-position: -140% 0%;
   }
+}
+.Edge {
+  display: contents;
 }
