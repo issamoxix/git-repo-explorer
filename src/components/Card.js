@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "../scss/components/card.scss";
 import Button from "./Button";
 import InfoCard from "./InfoCard";
+import useGetDateDiff from "./useGetDateDiff";
 function Card({ infos, loading = false }) {
   infos = { infos }.infos;
   const [active, setActive] = useState(false);
   const [show, setShow] = useState(false);
-
+  const { Diff } = useGetDateDiff(loading, infos.updated_at);
   return (
     <div
       className="card-container"
@@ -67,7 +68,9 @@ function Card({ infos, loading = false }) {
             className={loading ? "skel" : "card-timestamp"}
             style={{ color: loading && "transparent" }}
           >
-            <h5>{infos.pushed_at}</h5>
+            <h5>
+              Submitted {Diff} day{Diff > 3 && "s"} ago by {infos.name}
+            </h5>
           </div>
         </div>
       </div>
